@@ -24,5 +24,11 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "dependencies": {
+    "command-exists": "^1.2.9",
+    "commander": "^8.1.0",
+    "shelljs": "^0.8.4",
+    "simple-git": "^2.42.0"
   }
 }
