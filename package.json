@@ -1,0 +1,11 @@
+{
+  "name": "commit-rule-cli",
+  "version": "1.0.0",
+  "description": "git commit hooks rule quick config cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
