@@ -7,7 +7,7 @@
     "commit-rule-cli": "index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "123",
     "commit": "cz",
     "prepare": "husky install"
   },
@@ -26,8 +26,10 @@
     }
   },
   "dependencies": {
+    "chalk": "^4.1.2",
     "command-exists": "^1.2.9",
     "commander": "^8.1.0",
+    "lodash": "^4.17.21",
     "shelljs": "^0.8.4",
     "simple-git": "^2.42.0"
   }
