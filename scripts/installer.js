@@ -12,10 +12,9 @@ const modifPkg = async (temp) => {
 }
 
 // 写入husky commit msg
-const writeHuskyCommitMsg = () => {
-  const commitMsgFileData = `#!/bin/sh\n\n. "$(dirname "$0")/_/husky.sh"\n\nnpx --no-install commitlint --edit "$1"`
-  const dir = path.resolve(process.cwd(), '.husky/commit-msg')
-  return fsp.writeFile(dir, commitMsgFileData)
+const writeFile = (dir, data) => {
+  const writeDir = path.resolve(process.cwd(), dir)
+  return fsp.writeFile(writeDir, data)
 }
 
 
@@ -50,10 +49,10 @@ const main = ({ yarn }) => {
       return execPromise(`npx commitizen init cz-conventional-changelog --save-dev --save-exact`)
     })
     .then(_ => {
-      return execPromise(`echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js`)
+      return writeFile('commitlint.config.js', `module.exports = { extends: ['@commitlint/config-conventional'] };`)
     })
     .then(_ => {
-      return writeHuskyCommitMsg()
+      return writeFile('.husky/commit-msg', `#!/bin/sh\n\n. "$(dirname "$0")/_/husky.sh"\n\nnpx --no-install commitlint --edit "$1"`)
     })
 
 }
