@@ -2,11 +2,16 @@ const merge = require('lodash/merge')
 const { readPkg, writePkg } = require('./pkg')
 const execPromise = require('./execPromise')
 const { pLog, pSuccess, pError } = require('./print')
+
 const modifPkg = async (temp) => {
   let pkg = await readPkg()
   pkg = merge(pkg, temp)
-  pLog(pkg)
   await writePkg(pkg)
+}
+
+// 写入husky commit msg
+const writeHuskyCommitMsg = () => {
+  
 }
 
 
@@ -44,7 +49,7 @@ const main = ({ yarn }) => {
       return execPromise(`echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js`)
     })
     .then(_ => {
-      return execPromise('npx husky add .husky/commit-msg \'npx --no-install commitlint --edit \"$1\"\'')
+      return execPromise(`echo '#!/bin/sh\n\n. "$(dirname "$0")/_/husky.sh"\n\nnpx --no-install commitlint --edit "$1"' > .husky/commit-msg`)
     })
 
 }
