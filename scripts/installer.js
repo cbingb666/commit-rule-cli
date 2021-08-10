@@ -1,4 +1,6 @@
 const merge = require('lodash/merge')
+const fsp = require('fs/promises')
+const path = require('path')
 const { readPkg, writePkg } = require('./pkg')
 const execPromise = require('./execPromise')
 const { pLog, pSuccess, pError } = require('./print')
@@ -11,7 +13,9 @@ const modifPkg = async (temp) => {
 
 // 写入husky commit msg
 const writeHuskyCommitMsg = () => {
-  
+  const commitMsgFileData = `#!/bin/sh\n\n. "$(dirname "$0")/_/husky.sh"\n\nnpx --no-install commitlint --edit "$1"`
+  const dir = path.resolve(process.cwd(), '.husky/commit-msg')
+  return fsp.writeFile(dir, commitMsgFileData)
 }
 
 
@@ -49,7 +53,7 @@ const main = ({ yarn }) => {
       return execPromise(`echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js`)
     })
     .then(_ => {
-      return execPromise(`echo '#!/bin/sh\n\n. "$(dirname "$0")/_/husky.sh"\n\nnpx --no-install commitlint --edit "$1"' > .husky/commit-msg`)
+      return writeHuskyCommitMsg()
     })
 
 }
