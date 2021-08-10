@@ -9,7 +9,10 @@
   "scripts": {
     "test": "123",
     "commit": "cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "publish-major": "npm version major && npm publish",
+    "publish-minor": "npm version minor && npm publish",
+    "publish-patch": "npm version patch && npm publish"
   },
   "author": "",
   "license": "ISC",
