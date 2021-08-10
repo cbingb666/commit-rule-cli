@@ -11,6 +11,12 @@ const validYarn = () => {
     .catch(() => Promise.reject(ERR.LACK_YARN))
 }
 
+// 校验npm命令
+const validNpm = () => {
+  return commandExists('npm')
+    .catch(() => Promise.reject(ERR.LACK_YARN))
+}
+
 // 校验package
 const validPackage = () => {
   return readPkg()
@@ -32,14 +38,17 @@ const validGitStatus = () => {
 /**
  * 预备校验
  */
-const preValid = () => {
+const preValid = ({yarn}) => {
   pLog('valid...')
   return Promise.resolve()
     .then(() => {
       return validPackage()
     })
     .then(() => {
-      return validYarn()
+      if(yarn) {
+        return validYarn()
+      }
+      return validNpm()
     })
     .then(() => {
       return validGitStatus()

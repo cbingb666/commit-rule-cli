@@ -4,8 +4,16 @@
 
 ## 一键安装
 
+通过 npm 安装
+
 ```sh
 npx commit-rule-cli
+```
+
+通过 yarn 安装
+
+```sh
+npx commit-rule-cli --yarn
 ```
 
 ## 如何进行 git commit

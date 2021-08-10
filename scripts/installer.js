@@ -10,7 +10,7 @@ const modifPkg = async (temp) => {
 }
 
 
-const main = _ => {
+const main = ({yarn}) => {
   const modifPkgTemp = {
     devDependencies: {
       "@commitlint/cli": "^13.1.0",
@@ -29,22 +29,29 @@ const main = _ => {
       return modifPkg(modifPkgTemp)
     })
     .then(_ => {
-      return execPromise('yarn')
+      if(yarn) {
+        return execPromise('yarn')
+      }
+      return execPromise('npm install')
     })
     .then(_ => {
+      if(yarn) {
+        return execPromise(`npx commitizen init cz-conventional-changelog --yarn --dev --exact`)
+      }
       return execPromise(`npx commitizen init cz-conventional-changelog --save-dev --save-exact`)
-    })
-    .then(_ => {
-      return execPromise(`npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'`)
     })
     .then(_ => {
       return execPromise(`echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js`)
     })
+    .then(_ => {
+      return execPromise(`npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'`)
+    })
+    
 }
 
-const installer = _ => {
+const installer = option => {
   pLog('install...')
-  return main()
+  return main(option)
     .then(_ => {
       pSuccess(`
         -------------------------------------------------\n
