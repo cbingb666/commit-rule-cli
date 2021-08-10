@@ -1,7 +1,7 @@
 const merge = require('lodash/merge')
 const { readPkg, writePkg } = require('./pkg')
 const execPromise = require('./execPromise')
-const {pLog, pSuccess, pError} = require('./print')
+const { pLog, pSuccess, pError } = require('./print')
 const modifPkg = async (temp) => {
   let pkg = await readPkg()
   pkg = merge(pkg, temp)
@@ -10,7 +10,7 @@ const modifPkg = async (temp) => {
 }
 
 
-const main = ({yarn}) => {
+const main = ({ yarn }) => {
   const modifPkgTemp = {
     devDependencies: {
       "@commitlint/cli": "^13.1.0",
@@ -29,13 +29,13 @@ const main = ({yarn}) => {
       return modifPkg(modifPkgTemp)
     })
     .then(_ => {
-      if(yarn) {
+      if (yarn) {
         return execPromise('yarn')
       }
       return execPromise('npm install')
     })
     .then(_ => {
-      if(yarn) {
+      if (yarn) {
         return execPromise(`npx commitizen init cz-conventional-changelog --yarn --dev --exact`)
       }
       return execPromise(`npx commitizen init cz-conventional-changelog --save-dev --save-exact`)
@@ -46,7 +46,7 @@ const main = ({yarn}) => {
     .then(_ => {
       return execPromise(`npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'`)
     })
-    
+
 }
 
 const installer = option => {
@@ -55,9 +55,11 @@ const installer = option => {
     .then(_ => {
       pSuccess(`
         -------------------------------------------------\n
-        install success!!! \n
-        快去执行下方的命令验证吧!!!\n
-        git add . && git commit -m "test commit-rule-cli"\n
+        install success!!! \n\n
+        执行下方的命令验证规范校验是否生效吧!!!\n
+        git add . && git commit -m "test commit-rule-cli"\n\n
+        执行下方的命令进行提交!!!\n
+        npm run commit\n
         -------------------------------------------------\n
       `)
       return Promise.resolve()
