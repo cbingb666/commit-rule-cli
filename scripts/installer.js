@@ -44,7 +44,7 @@ const main = ({ yarn }) => {
       return execPromise(`echo "module.exports = { extends: ['@commitlint/config-conventional'] };" > commitlint.config.js`)
     })
     .then(_ => {
-      return execPromise(`npx husky add .husky/commit-msg 'npx --no-install commitlint --edit "$1"'`)
+      return execPromise('npx husky add .husky/commit-msg \'npx --no-install commitlint --edit \"$1\"\'')
     })
 
 }
