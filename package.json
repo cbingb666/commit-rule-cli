@@ -1,6 +1,6 @@
 {
   "name": "commit-rule-cli",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "git commit hooks rule quick config cli",
   "main": "index.js",
   "bin": {
